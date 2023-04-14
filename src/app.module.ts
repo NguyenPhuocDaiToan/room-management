@@ -3,6 +3,8 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
+import { UserService } from './user.service';
+import { User, UserSchema } from './user.schema';
 
 mongoosePaginate.paginate.options = {
   lean: true,
@@ -23,8 +25,14 @@ mongoosePaginate.paginate.options = {
         },
       },
     ),
+    MongooseModule.forFeature([
+      {
+        name: User.name,
+        schema: UserSchema,
+      },
+    ]),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, UserService],
 })
 export class AppModule {}
